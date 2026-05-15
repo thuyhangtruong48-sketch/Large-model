@@ -1,0 +1,14 @@
+flask
+flask-cors
+sentence-transformers
+pymilvus
+jieba
+elasticsearch==8.12.1
+numpy
+neo4j
+langchain-ollama
+langchain-core
+requests
+ollama
+python-dotenv
+
