@@ -111,15 +111,15 @@ function Ensure-Neo4j() {
         return
     }
 
-    $home = $Neo4jHomes | Where-Object { Test-Path (Join-Path $_ "bin\neo4j.bat") } | Select-Object -First 1
-    if (-not $home) {
+    $neo4jHome = $Neo4jHomes | Where-Object { Test-Path (Join-Path $_ "bin\neo4j.bat") } | Select-Object -First 1
+    if (-not $neo4jHome) {
         Write-Warning "Neo4j installation not found. Skipping Neo4j startup."
         return
     }
 
-    $log = Join-Path $home "logs\codex-neo4j-start.log"
-    $err = Join-Path $home "logs\codex-neo4j-start.err.log"
-    Start-Process -FilePath (Join-Path $home "bin\neo4j.bat") -ArgumentList "console" -WorkingDirectory $home -RedirectStandardOutput $log -RedirectStandardError $err -WindowStyle Hidden
+    $log = Join-Path $neo4jHome "logs\codex-neo4j-start.log"
+    $err = Join-Path $neo4jHome "logs\codex-neo4j-start.err.log"
+    Start-Process -FilePath (Join-Path $neo4jHome "bin\neo4j.bat") -ArgumentList "console" -WorkingDirectory $neo4jHome -RedirectStandardOutput $log -RedirectStandardError $err -WindowStyle Hidden
     Wait-Port 7687 "Neo4j" 120 | Out-Null
 }
 
@@ -159,4 +159,3 @@ Write-Host "  Elasticsearch: $(Test-Port 9200)"
 Write-Host "  Neo4j:         $(Test-Port 7687)"
 Write-Host ""
 Write-Host "Open http://127.0.0.1:5001/" -ForegroundColor Green
-
